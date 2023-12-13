@@ -68,6 +68,12 @@ var frontierBlockRewardExpanse = big.NewInt(8e+18)
 var byzantiumBlockRewardExpanse = big.NewInt(4e+18)
 var constantinopleBlockRewardExpanse = big.NewInt(4e+18)
 
+// params for QIE
+var qieBlockReward = big.NewInt(2e+18)
+
+// params for MAGA
+var magaBlockReward = big.NewInt(2e+18)
+
 // misc consts
 var big32 = big.NewInt(32)
 var big8 = big.NewInt(8)
@@ -342,6 +348,20 @@ func (u *BlockUnlocker) handleBlock(block *rpc.GetBlockReply, candidate *storage
 		rewardForUncles := big.NewInt(0).Mul(uncleReward, big.NewInt(int64(len(block.Uncles))))
 		reward.Add(reward, rewardForUncles)
 
+	} else if u.config.Network == "qie" {
+		reward = getConstRewardQie(candidate.Height)
+		// Add reward for including uncles
+		uncleReward := new(big.Int).Div(reward, big32)
+		rewardForUncles := big.NewInt(0).Mul(uncleReward, big.NewInt(int64(len(block.Uncles))))
+		reward.Add(reward, rewardForUncles)
+
+	} else if u.config.Network == "maga" {
+		reward = getConstRewardMaga(candidate.Height)
+		// Add reward for including uncles
+		uncleReward := new(big.Int).Div(reward, big32)
+		rewardForUncles := big.NewInt(0).Mul(uncleReward, big.NewInt(int64(len(block.Uncles))))
+		reward.Add(reward, rewardForUncles)
+
 	} else if u.config.Network == "ethereum" || u.config.Network == "ropsten" || u.config.Network == "ethereumFair" {
 		reward = getConstRewardEthereum(candidate.Height, u.config)
 		// Add reward for including uncles
@@ -425,6 +445,10 @@ func handleUncle(height int64, uncle *rpc.GetBlockReply, candidate *storage.Bloc
 		reward = getUncleRewardOctaspace(new(big.Int).SetInt64(uncleHeight), new(big.Int).SetInt64(height), getConstRewardOctaspace(height))
 	} else if cfg.Network == "universal" {
 		reward = getUncleRewardUniversal(new(big.Int).SetInt64(uncleHeight), new(big.Int).SetInt64(height), getConstRewardUniversal(height))
+	} else if cfg.Network == "qie" {
+		reward = getUncleRewardEthereum(new(big.Int).SetInt64(uncleHeight), new(big.Int).SetInt64(height), getConstRewardQie(height))
+	} else if cfg.Network == "maga" {
+		reward = getUncleRewardEthereum(new(big.Int).SetInt64(uncleHeight), new(big.Int).SetInt64(height), getConstRewardMaga(height))
 	} else if cfg.Network == "canxium" {
 		reward = big.NewInt(0)
 	}
@@ -770,6 +794,20 @@ func getUncleReward(uHeight *big.Int, height *big.Int, era *big.Int, reward *big
 		return r
 	}
 	return getRewardForUncle(reward)
+}
+
+// QIE
+func getConstRewardQie(height int64) *big.Int {
+	// Rewards)
+	// QIE
+	return calcBigNumber(2.0)
+}
+
+// MAGA
+func getConstRewardMaga(height int64) *big.Int {
+	// Rewards)
+	// MAGA
+	return calcBigNumber(2.0)
 }
 
 func getConstRewardEthereumpow(height int64) *big.Int {
