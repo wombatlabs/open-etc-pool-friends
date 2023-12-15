@@ -15,7 +15,7 @@
 		"stateUpdateInterval": "3s",
 		"difficulty": 8589934592,
 		"hashrateExpiration": "3h",
-		"stratumHostname": "example.org",
+		"stratumHostname": "example.net",
 		"healthCheck": true,
 		"debug": true,
 		"maxFails": 100,
@@ -101,7 +101,7 @@
 		]
 	},
 	"exchange": {
-		"enabled": true,
+		"enabled": false,
 		"url": "https://api.coinpaprika.com/v1/ticker/etc-ethereum-classic",
 		"timeout": "50s",
 		"refreshInterval": "900s"
@@ -123,7 +123,7 @@
 		"interval": "20m",
 		"daemon": "http://127.0.0.1:8545",
 		"timeout": "10s",
-		"address": "0xd92fa5a9732a0aec36dc8d5a6a1305dc2d3e09e6",
+		"address": "0x0",
 		"gas": "21000",
 		"gasPrice": "50000000000",
 		"autoGas": true,
