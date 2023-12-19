@@ -34,7 +34,7 @@ func (s *ProxyServer) processShare(login, id, ip string, t *BlockTemplate, param
 		} else if s.config.Network == "ethereum" || s.config.Network == "ropsten" || s.config.Network == "ethereumPow" ||
 			s.config.Network == "ethereumFair" || s.config.Network == "callisto" || s.config.Network == "etica" ||
 			s.config.Network == "octaspace" || s.config.Network == "universal" || s.config.Network == "canxium" || 
-			s.config.Network == "qie" || s.config.Network == "maga" {
+			s.config.Network == "qie" || s.config.Network == "maga" || s.config.Network == "avi" {
 			hasher = etchash.New(nil, nil, nil)
 		} else {
 			// unknown network
