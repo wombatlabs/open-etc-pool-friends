@@ -15,24 +15,24 @@ module.exports = function (environment) {
 
     APP: {
       // API host and port
-      ApiUrl: '//example.net/',
+      ApiUrl: '//144.202.66.15/',
 
       // HTTP mining endpoint
-      HttpHost: 'http://example.net',
+      HttpHost: 'http://144.202.66.15',
       HttpPort: 8888,
 
       // Stratum mining endpoint
-      StratumHost: 'example.net',
+      StratumHost: '144.202.66.15',
       StratumPort: 8008,
 
       // The ETC network
-      Unit: 'ETC',
+      Unit: 'AVI',
       Currency: 'USD',
 
       // Fee and payout details
       PoolFee: '1%',
       PayoutThreshold: '0.5',
-      BlockReward: 2.56,
+      BlockReward: 7.62,
 
       // For network hashrate (change for your favourite fork)
       BlockTime: 13.2
