@@ -15,14 +15,14 @@ module.exports = function (environment) {
 
     APP: {
       // API host and port
-      ApiUrl: '//144.202.66.15/',
+      ApiUrl: '//pool.avicoin.org/',
 
       // HTTP mining endpoint
-      HttpHost: 'http://144.202.66.15',
+      HttpHost: 'http://pool.avicoin.org',
       HttpPort: 8888,
 
       // Stratum mining endpoint
-      StratumHost: '144.202.66.15',
+      StratumHost: 'pool.avicoin.org',
       StratumPort: 8008,
 
       // The ETC network
