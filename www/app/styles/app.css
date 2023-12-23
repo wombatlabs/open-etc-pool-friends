@@ -9,6 +9,7 @@ body {
     /* Margin bottom by footer height */
     margin-bottom: 110px;
     /* background: url('/bg.png'); /* */
+    background-color: #0c0c0c;
 }
 
 .footer {
