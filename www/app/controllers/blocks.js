@@ -107,7 +107,7 @@ export default Ember.Controller.extend({
                     },
                     series: [{
                         step: 'center',
-                        color: "#E99002",
+                        color: "#fff",
                         name: "difficulty",
                         data: function() {
                             var e, a = [];
@@ -139,6 +139,7 @@ export default Ember.Controller.extend({
                         }()
                     }, {
                         step: 'center',
+                        color: "#fff",
                         name: "shares",
                         data: function() {
                             var e, a = [];
