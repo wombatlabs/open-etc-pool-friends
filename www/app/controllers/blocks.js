@@ -43,7 +43,7 @@ export default Ember.Controller.extend({
                     xAxis: {
                         labels: {
                             style: {
-                                color: '#6e6e70'
+                                color: '#fff'
                             }
                         },
                         ordinal: false,
@@ -62,13 +62,13 @@ export default Ember.Controller.extend({
                     yAxis: {
                         labels: {
                             style: {
-                                color: '#6e6e70'
+                                color: '#fff'
                             }
                         },
                         title: {
                             text: "shares and difficulty",
                             style: {
-                                color: 'black',
+                                color: 'white',
                                 fontSize: '16px',
                                 fontWeight: 'bold'
                             }
@@ -78,7 +78,7 @@ export default Ember.Controller.extend({
                     plotLines: [{
                         value: 0,
                         width: 1,
-                        color: "#808080"
+                        color: "#fff"
                     }],
                     plotOptions: {
                         series: {
