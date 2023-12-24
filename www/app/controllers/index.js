@@ -39,13 +39,13 @@ export default Ember.Controller.extend({
                     title: {
                         text: "Pool Hashrate",
                         style: {
-                            color: "#000"
+                            color: "#fff"
                         }
                     },
                     xAxis: {
                         labels: {
                             style: {
-                                color: "#000"
+                                color: "#fff"
                             }
                         },
                         ordinal: false,
@@ -55,13 +55,13 @@ export default Ember.Controller.extend({
                         title: {
                             text: "HASHRATE",
                             style: {
-                                color: "#000"
+                                color: "#fff"
                             }
                         },
                         min: 0,
                         labels: {
                             style: {
-                                color: "#000"
+                                color: "#fff"
                             }
                         }
                     },
@@ -240,7 +240,7 @@ export default Ember.Controller.extend({
                     plotLines: [{
                         value: 0,
                         width: 1,
-                        color: "#000"
+                        color: "#fff"
                     }],
                     legend: {
                         enabled: false
