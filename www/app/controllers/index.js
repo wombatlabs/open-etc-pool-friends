@@ -139,7 +139,7 @@ export default Ember.Controller.extend({
                     title: {
                         text: "Network Difficulty",
                         style: {
-                            color: "#000"
+                            color: "#fff"
                         }
                     },
                     rangeSelector: {
@@ -215,7 +215,7 @@ export default Ember.Controller.extend({
 
                         labels: {
                             style: {
-                                color: "#000"
+                                color: "#fff"
                             }
                             //minRange: 1
                         },
@@ -227,13 +227,13 @@ export default Ember.Controller.extend({
                         title: {
                             text: "DIFFICULTY",
                             style: {
-                                color: "#000"
+                                color: "#fff"
                             }
                         },
 
                         labels: {
                             style: {
-                                color: "#000"
+                                color: "#fff"
                             }
                         }
                     },
