@@ -209,7 +209,8 @@ h6 {
 
 /* tabs */
 .tab-content>.tab-pane {
-    background-color: #ffffff;
+    background-color: #252525;
+    color: #ffffff;
     padding: 1em;
     border-radius: 0 0 5px 5px;
     border: 1px #eeeeee solid;
