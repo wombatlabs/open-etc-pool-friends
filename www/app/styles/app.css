@@ -8,6 +8,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 110px;
+    background: #0c0c0c;
     /* background: url('/bg.png'); /* */
 }
 
@@ -16,7 +17,7 @@ body {
     bottom: 0;
     width: 100%;
     /* Set the fixed height of the footer here */
-    background-color: #3a3b3c;
+    background-color: #191919;
 }
 
 .center {
