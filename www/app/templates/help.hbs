@@ -4,25 +4,25 @@
     <h1>How To Mine</h1>
   </div>
 
-  <div class="col-md-12" style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px;">
+  <div class="col-md-12" style="border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; color: #ffffff;">
     <div class="col-md-6">
       <div class="page-header">
         <h3>lolMiner</h3>
       </div>
-      <p class="lead">In order to mine etchash you need   
+      <p class="lead">In order to mine ethash you need   
         <a href="https://github.com/Lolliedieb/lolMiner-releases/releases" rel="nofollow" target="_blank">lolMiner</a> v1.12+
       </p>
-      <p><code>./lolMiner --pool {{config.StratumHost}}:{{config.StratumPort}} --user [YOUR_ETC_ADDRESS] -c ETC {{if (equals config.Network 'mordor') "--ecip1099-activation 84"}} --ethstratum=ETHPROXY</code></p>
+      <p><code>./lolMiner --pool {{config.StratumHost}}:{{config.StratumPort}} --user [YOUR_ETH_ADDRESS] -c ETH {{if (equals config.Network 'mordor') "--ecip1099-activation 84"}} --ethstratum=ETHPROXY</code></p>
       <dl class="dl-horizontal">
-        <dt>YOUR_ETC_ADDRESS</dt>
+        <dt>YOUR_ETH_ADDRESS</dt>
         <dd>This is your address for payouts, generate one with core-geth, or mine directly to exchange like
           <a href="http://bittrex.com" rel="nofollow" target="_blank">Bittrex</a>.<br/>
-          <strong>Example:</strong> <code>0xd92fa5a9732a0aec36dc8d5a6a1305dc2d3e09e6</code>.
+          <strong>Example:</strong> <code>0xD3876313e812A6255c7Fc236db33075290cFC526</code>.
         </dd>
       </dl>
       <p>
         <strong>Full example:</strong>
-        <code>./lolMiner --pool {{config.StratumHost}}:{{config.StratumPort}} --user 0xd92fa5a9732a0aec36dc8d5a6a1305dc2d3e09e6 -c ETC {{if (equals config.Network 'mordor') "--ecip1099-activation 84"}} --ethstratum=ETHPROXY</code>.<br/>
+        <code>./lolMiner --pool {{config.StratumHost}}:{{config.StratumPort}} --user 0xD3876313e812A6255c7Fc236db33075290cFC526 -c  {{if (equals config.Network 'mordor') "--ecip1099-activation 84"}} --ethstratum=ETHPROXY</code>.<br/>
       </p>
     </div>
 
@@ -30,16 +30,16 @@
       <div class="page-header">
         <h3>nanominer <small>mainnet only</small> </h3>
       </div>
-      <p class="lead">In order to mine etchash you need   
+      <p class="lead">In order to mine ethash you need   
         <a href="https://github.com/nanopool/nanominer/releases" rel="nofollow" target="_blank">nanominer</a> v1.12.0+
       </p>
       <h4>example config</h4>
       <pre>
 ; Address to send funds to. Change this address to yours!
-wallet = 0xd92fa5a9732a0aec36dc8d5a6a1305dc2d3e09e6
+wallet = 0xD3876313e812A6255c7Fc236db33075290cFC526
 
 ; Coin to mine.
-coin = ETC
+coin = ETH
 
 pool1={{config.StratumHost}}:{{config.StratumPort}}
       </pre>
