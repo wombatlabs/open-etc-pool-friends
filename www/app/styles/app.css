@@ -71,7 +71,7 @@ body>.container {
     margin: 0;
     padding: 40px 0 15px 0;
     margin-bottom: 15px;
-    background-color: #096991;
+    background-color: #59cdff;
     color: #ffffff;
 }
 
@@ -85,7 +85,7 @@ code {
 
 .navbar-default {
     background-color: #0c0c0c;
-    border-color: #0e96d0;
+    border-color: #13B8FF;
     border-bottom-width: 2px;
 }
 
@@ -108,14 +108,14 @@ code {
 
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
-    color: #0e96d0;
+    color: #13B8FF;
 }
 
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:hover,
 .navbar-default .navbar-nav>.active>a:focus {
     color: #ffffff;
-    background-color: #0e96d0;
+    background-color: #13B8FF;
     text-shadow: 1px 1px 2px #000;
 }
 
@@ -173,7 +173,7 @@ code {
 span.logo-1 {
     font-weight: 700;
     font-style: italic;
-    color: #0e96d0;
+    color: #13B8FF;
     padding: 0 7px 0 23px;
 }
 
@@ -457,8 +457,8 @@ h4.note {
 }
 
 .ul-etc {
-    color: #0e96d0;
-    border-bottom: 2px solid #0e96d0;
+    color: #13B8FF;
+    border-bottom: 2px solid #13B8FF;
 }
 
 #alertError,
@@ -469,7 +469,7 @@ h4.note {
 /*-----------------------------------------| Custom Classes |-----------------------------------------*/
 
 .btn-etc {
-    background-color: #0e96d0;
+    background-color: #13B8FF;
     border-color: #408c5a;
 }
 
