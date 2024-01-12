@@ -480,7 +480,9 @@ otherwise you will get errors on start because of JSON comments.**
     // Parity node rpc endpoint for unlocking blocks
     "daemon": "http://127.0.0.1:8545",
     // Rise error if can't reach parity
-    "timeout": "10s"
+    "timeout": "10s",
+    // london hard fork ON or OFF
+    "isLondonHardForkEnabled": false
   },
 
   // Pay out miners using this module

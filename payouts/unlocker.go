@@ -1,6 +1,7 @@
 package payouts
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"math/big"
@@ -17,23 +18,27 @@ import (
 )
 
 type UnlockerConfig struct {
-	Enabled              bool     `json:"enabled"`
-	PoolFee              float64  `json:"poolFee"`
-	PoolFeeAddress       string   `json:"poolFeeAddress"`
-	Depth                int64    `json:"depth"`
-	ImmatureDepth        int64    `json:"immatureDepth"`
-	KeepTxFees           bool     `json:"keepTxFees"`
-	Interval             string   `json:"interval"`
-	Daemon               string   `json:"daemon"`
-	Timeout              string   `json:"timeout"`
-	Ecip1017FBlock       int64    `json:"ecip1017FBlock"`
-	Ecip1017EraRounds    *big.Int `json:"ecip1017EraRounds"`
-	ByzantiumFBlock      *big.Int `json:"byzantiumFBlock"`
-	ConstantinopleFBlock *big.Int `json:"constantinopleFBlock"`
-	Network              string   `json:"network"`
+	Enabled                 bool     `json:"enabled"`
+	PoolFee                 float64  `json:"poolFee"`
+	PoolFeeAddress          string   `json:"poolFeeAddress"`
+	Depth                   int64    `json:"depth"`
+	ImmatureDepth           int64    `json:"immatureDepth"`
+	KeepTxFees              bool     `json:"keepTxFees"`
+	Interval                string   `json:"interval"`
+	Daemon                  string   `json:"daemon"`
+	Timeout                 string   `json:"timeout"`
+	Ecip1017FBlock          int64    `json:"ecip1017FBlock"`
+	Ecip1017EraRounds       *big.Int `json:"ecip1017EraRounds"`
+	ByzantiumFBlock         *big.Int `json:"byzantiumFBlock"`
+	ConstantinopleFBlock    *big.Int `json:"constantinopleFBlock"`
+	Network                 string   `json:"network"`
+	IsLondonHardForkEnabled bool     `json:"isLondonHardForkEnabled"`
 }
 
 const minDepth = 16
+
+// London hark fork
+const londonHardForkHeight = 12965000
 
 // params for canxium
 const HydroForkBlock = 4204800
@@ -985,14 +990,33 @@ func getUncleRewardEthereum(uHeight *big.Int, height *big.Int, reward *big.Int) 
 func (u *BlockUnlocker) getExtraRewardForTx(block *rpc.GetBlockReply) (*big.Int, error) {
 	amount := new(big.Int)
 
+	blockHeight, err := strconv.ParseInt(strings.Replace(block.Number, "0x", "", -1), 16, 64)
+	if err != nil {
+		return nil, err
+	}
+	baseFeePerGas := util.String2Big(block.BaseFeePerGas)
+
+	config := UnlockerConfig{
+		IsLondonHardForkEnabled: blockHeight >= londonHardForkHeight,
+	}
+
 	for _, tx := range block.Transactions {
 		receipt, err := u.rpc.GetTxReceipt(tx.Hash)
 		if err != nil {
-			return nil, err
+			log.Println("Error getting transaction receipt:", err)
+			continue
 		}
 		if receipt != nil {
 			gasUsed := util.String2Big(receipt.GasUsed)
 			gasPrice := util.String2Big(tx.GasPrice)
+
+			if config.IsLondonHardForkEnabled {
+				gasPrice = new(big.Int).Sub(gasPrice, baseFeePerGas)
+				if gasPrice.Cmp(big.NewInt(0)) < 0 {
+					return nil, errors.New("gasPrice less than baseFeePerGas")
+				}
+			}
+
 			fee := new(big.Int).Mul(gasUsed, gasPrice)
 			amount.Add(amount, fee)
 		}
