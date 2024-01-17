@@ -132,7 +132,7 @@ export default Ember.Controller.extend({
                         type: "datetime",
                         labels: {
                             style: {
-                                color: "#000",
+                                color: "#fff",
                             },
                             formatter: function () {
                                 return formatDate(this.value, "hours:minutes");
@@ -153,7 +153,7 @@ export default Ember.Controller.extend({
                             labels: {
                                 enabled: true,
                                 style: {
-                                    color: "#000",
+                                    color: "#fff",
                                 },
                                 formatter: function () {
                                     return formatNumber(this.value);
@@ -173,7 +173,7 @@ export default Ember.Controller.extend({
                             labels: {
                                 enabled: true,
                                 style: {
-                                    color: "#000",
+                                    color: "#fff",
                                 },
                                 formatter: function () {
                                     return formatNumber(this.value);
@@ -193,20 +193,20 @@ export default Ember.Controller.extend({
                         {
                             value: 0,
                             width: 1,
-                            color: "#000",
+                            color: "#fff",
                         },
                     ],
                     legend: {
                         symbolRadius: 4,
                         borderWidth: 1,
                         itemStyle: {
-                            color: "rgba(255,255,255,0)",
+                            color: "#ffffff",
                         },
                         itemHoverStyle: {
-                            color: "#000000",
+                            color: "#777777",
                         },
                         itemHiddenStyle: {
-                            color: "#A8A2A2",
+                            color: "#d7d7d7",
                         },
                     },
                     tooltip: {
