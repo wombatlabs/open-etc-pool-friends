@@ -15,24 +15,24 @@ module.exports = function (environment) {
 
     APP: {
       // API host and port
-      ApiUrl: '//pool.avicoin.org/',
+      ApiUrl: '//pool.realmagacoin.com/',
 
       // HTTP mining endpoint
-      HttpHost: 'http://pool.avicoin.org',
+      HttpHost: 'http://pool.realmagacoin.com',
       HttpPort: 8888,
 
       // Stratum mining endpoint
-      StratumHost: 'pool.avicoin.org',
+      StratumHost: 'pool.realmagacoin.com',
       StratumPort: 8008,
 
       // The ETC network
-      Unit: 'AVI',
+      Unit: 'MAGA',
       Currency: 'USD',
 
       // Fee and payout details
       PoolFee: '1%',
       PayoutThreshold: '0.5',
-      BlockReward: 7.62,
+      BlockReward: 2.0,
 
       // For network hashrate (change for your favourite fork)
       BlockTime: 13.2

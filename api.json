@@ -1,10 +1,10 @@
 {
 	"threads": 4,
-	"coin": "AVI",
+	"coin": "MAGA",
 	"name": "main",
 	"pplns": 9000,
-	"network": "avi",
-	"coin-name": "AVI",
+	"network": "maga",
+	"coin-name": "MAGA",
 	"proxy": {
 		"enabled": true,
 		"listen": "0.0.0.0:8888",
@@ -15,7 +15,7 @@
 		"stateUpdateInterval": "3s",
 		"difficulty": 8589934592,
 		"hashrateExpiration": "3h",
-		"stratumHostname": "pool.avicoin.org",
+		"stratumHostname": "pool.realmagacoin.com",
 		"healthCheck": true,
 		"debug": true,
 		"maxFails": 100,
