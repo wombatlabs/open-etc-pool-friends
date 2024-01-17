@@ -54,12 +54,12 @@
   "upstream": [
     {
       "name": "main",
-      "url": "http://127.0.0.1:8547",
+      "url": "http://127.0.0.1:8545",
       "timeout": "10s"
     },
     {
       "name": "backup",
-      "url": "http://127.0.0.2:8547",
+      "url": "http://127.0.0.2:8545",
       "timeout": "10s"
     }
   ],

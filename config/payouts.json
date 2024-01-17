@@ -9,7 +9,7 @@
     "enabled": false,
     "requirePeers": 1,
     "interval": "20m",
-    "daemon": "http://127.0.0.1:8547",
+    "daemon": "http://127.0.0.1:8545",
     "timeout": "10s",
     "address": "0xd92fa5a9732a0aec36dc8d5a6a1305dc2d3e09e6",
     "gas": "21000",
@@ -22,12 +22,12 @@
   "upstream": [
     {
       "name": "main",
-      "url": "http://127.0.0.1:8547",
+      "url": "http://127.0.0.1:8545",
       "timeout": "10s"
     },
     {
       "name": "backup",
-      "url": "http://127.0.0.2:8547",
+      "url": "http://127.0.0.2:8545",
       "timeout": "10s"
     }
   ],
