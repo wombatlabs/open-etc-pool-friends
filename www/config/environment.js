@@ -25,7 +25,7 @@ module.exports = function (environment) {
       StratumHost: 'pool.realmagacoin.com',
       StratumPort: 8008,
 
-      // The ETC network
+      // The MAGA network
       Unit: 'MAGA',
       Currency: 'USD',
 

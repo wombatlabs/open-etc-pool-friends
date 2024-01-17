@@ -1,0 +1,59 @@
+{
+  "threads": 4,
+  "coin": "MAGA",
+  "name": "main",
+  "pplns": 9000,
+  "network": "maga",
+  "coin-name": "MAGA",
+  "api": {
+    "enabled": true,
+    "purgeOnly": false,
+    "purgeInterval": "10m",
+    "listen": "0.0.0.0:4000",
+    "statsCollectInterval": "5s",
+    "hashrateWindow": "30m",
+    "hashrateLargeWindow": "3h",
+    "luckWindow": [
+      64,
+      128,
+      256
+    ],
+    "payments": 30,
+    "blocks": 50,
+    "poolCharts": "0 */20 * * * *",
+    "poolChartsNum": 74,
+    "minerCharts": "0 */20 * * * *",
+    "minerChartsNum": 74,
+    "netCharts": "0 */20 * * * *",
+    "netChartsNum": 74,
+    "shareCharts": "0 */20 * * * *",
+    "shareChartsNum": 74
+  },
+  "upstreamCheckInterval": "5s",
+  "upstream": [
+    {
+      "name": "main",
+      "url": "http://127.0.0.1:8547",
+      "timeout": "10s"
+    }
+  ],
+  "redis": {
+    "endpoint": "127.0.0.1:6379",
+    "poolSize": 10,
+    "database": 1,
+    "password": "",
+    "sentinelEnabled": false,
+    "masterName": "mymaster",
+    "sentinelAddrs": [
+      "127.0.0.1:26379",
+      "127.0.0.1:26389",
+      "127.0.0.1:26399"
+    ]
+  },
+  "exchange": {
+    "enabled": true,
+    "url": "https://api.coinpaprika.com/v1/ticker/etc-ethereum-classic",
+    "timeout": "50s",
+    "refreshInterval": "900s"
+  }
+}

@@ -393,7 +393,7 @@ otherwise you will get errors on start because of JSON comments.**
   // Provides JSON data for frontend which is static website
   "api": {
     "enabled": true,
-    "listen": "0.0.0.0:8080",
+    "listen": "0.0.0.0:4000",
     // Collect miners stats (hashrate, ...) in this interval
     "statsCollectInterval": "5s",
     // Purge stale stats interval

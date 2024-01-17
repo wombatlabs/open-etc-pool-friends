@@ -1,0 +1,79 @@
+{
+  "threads": 4,
+  "coin": "MAGA",
+  "name": "main",
+  "pplns": 9000,
+  "network": "maga",
+  "coin-name": "MAGA",
+  "proxy": {
+    "enabled": true,
+    "listen": "0.0.0.0:6002",
+    "limitHeadersSize": 1024,
+    "limitBodySize": 256,
+    "behindReverseProxy": false,
+    "blockRefreshInterval": "50ms",
+    "stateUpdateInterval": "3s",
+    "difficulty": 68719476736,
+    "hashrateExpiration": "3h",
+    "stratumHostname": "pool.realmagacoin.com",
+    "healthCheck": true,
+    "debug": true,
+    "maxFails": 100,
+    "stratum": {
+      "enabled": true,
+      "listen": "0.0.0.0:8008",
+      "timeout": "120s",
+      "maxConn": 8192,
+      "tls": false,
+      "certFile": "/path/to/cert.pem",
+      "keyFile": "/path/to/key.pem"
+    },
+    "policy": {
+      "workers": 8,
+      "resetInterval": "60m",
+      "refreshInterval": "1m",
+      "blacklist_file": "/home/pool/open-etc-pool-friends/stratum_blacklist.json",
+      "banning": {
+        "enabled": true,
+        "ipset": "blacklist",
+        "timeout": 1800,
+        "invalidPercent": 30,
+        "checkThreshold": 30,
+        "malformedLimit": 5,
+        "fail2banCommand": "fail2ban-client"
+      },
+      "limits": {
+        "enabled": false,
+        "limit": 30,
+        "grace": "5m",
+        "limitJump": 10
+      }
+    }
+  },
+  "upstreamCheckInterval": "5s",
+  "upstream": [
+    {
+      "name": "main",
+      "url": "http://127.0.0.1:8547",
+      "timeout": "10s"
+    },
+    {
+      "name": "backup",
+      "url": "http://127.0.0.2:8547",
+      "timeout": "10s"
+    }
+  ],
+  "redis": {
+    "endpoint": "127.0.0.1:6379",
+    "poolSize": 10,
+    "database": 1,
+    "password": "",
+    "sentinelEnabled": false,
+    "masterName": "mymaster",
+    "sentinelAddrs": [
+      "127.0.0.1:26379",
+      "127.0.0.1:26389",
+      "127.0.0.1:26399"
+    ]
+  }
+}
