@@ -92,7 +92,16 @@ export default Ember.Controller.extend({
                         }
                     },
                     legend: {
-                        enabled: true
+                        enabled: true,
+                        itemStyle: {
+                            color: "#ffffff",
+                        },
+                        itemHoverStyle: {
+                            color: "#777777",
+                        },
+                        itemHiddenStyle: {
+                            color: "#d7d7d7",
+                        },
                     },
                     tooltip: {
                         formatter: function() {
