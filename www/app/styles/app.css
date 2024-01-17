@@ -85,7 +85,7 @@ code {
 
 .navbar-default {
     background-color: #0c0c0c;
-    border-color: #13B8FF;
+    border-color: #0A3161;
     border-bottom-width: 2px;
 }
 
@@ -108,14 +108,14 @@ code {
 
 .navbar-default .navbar-nav>li>a:hover,
 .navbar-default .navbar-nav>li>a:focus {
-    color: #13B8FF;
+    color: #0A3161;
 }
 
 .navbar-default .navbar-nav>.active>a,
 .navbar-default .navbar-nav>.active>a:hover,
 .navbar-default .navbar-nav>.active>a:focus {
     color: #ffffff;
-    background-color: #13B8FF;
+    background-color: #0A3161;
     text-shadow: 1px 1px 2px #000;
 }
 
@@ -173,7 +173,7 @@ code {
 span.logo-1 {
     font-weight: 700;
     font-style: italic;
-    color: #13B8FF;
+    color: #0A3161;
     padding: 0 7px 0 23px;
 }
 
@@ -457,8 +457,8 @@ h4.note {
 }
 
 .ul-etc {
-    color: #13B8FF;
-    border-bottom: 2px solid #13B8FF;
+    color: #0A3161;
+    border-bottom: 2px solid #0A3161;
 }
 
 #alertError,
@@ -469,7 +469,7 @@ h4.note {
 /*-----------------------------------------| Custom Classes |-----------------------------------------*/
 
 .btn-etc {
-    background-color: #13B8FF;
+    background-color: #0A3161;
     border-color: #408c5a;
 }
 
