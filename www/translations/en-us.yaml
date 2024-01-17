@@ -41,7 +41,7 @@ home:
   payouts_run: every {interval}.
   payout_scheme_detail: Real time PPLNS payout scheme.
   miners_online: Miners Online
-  pool_hashrate: Pool Hash Rate
+  pool_hashrate: Pool Hashrate
   pool_fee: Pool Fee
   last_block_found: Last Block Found
   network_difficulty: Network Difficulty

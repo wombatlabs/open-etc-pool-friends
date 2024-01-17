@@ -1,292 +1,305 @@
-import Ember from 'ember';
+function formatDate(date, format) {
+    date = new Date(date);
+    var formattedDate = {
+        year: date.getFullYear(),
+        month: date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1,
+        day: date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
+        hours: date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+        minutes: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+        seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds(),
+    };
+    for (var key in formattedDate) {
+        format = format.replace(key, formattedDate[key]);
+    }
+    return format;
+}
+
+function formatHashrate(hashrate, showUnit) {
+    var units = ["H/s", "KH/s", "MH/s", "GH/s", "TH/s", "PH/s"];
+    var index = 0;
+    while (hashrate > 1e3) {
+        hashrate /= 1e3;
+        index++;
+    }
+    return showUnit
+        ? hashrate.toFixed(2) + " " + units[index]
+        : hashrate.toFixed(2) + " " + units[index];
+}
+
+function formatNumber(number) {
+    var units = ["H/s", "KH/s", "MH/s", "GH/s", "TH/s", "PH/s"];
+    var index = 0;
+    while (number >= 1e3) {
+        number /= 1e3;
+        index++;
+    }
+    number = number < 10 ? number.toFixed(2) : number.toFixed(2);
+    return number.replace(".00", "") + " " + units[index];
+}
+
+import Ember from "ember";
 
 export default Ember.Controller.extend({
-    applicationController: Ember.inject.controller('application'),
-    stats: Ember.computed.reads('applicationController'),
-    config: Ember.computed.reads('applicationController.config'),
+    applicationController: Ember.inject.controller("application"),
+    stats: Ember.computed.reads("applicationController"),
+    config: Ember.computed.reads("applicationController.config"),
 
-    cachedLogin: Ember.computed('login', {
+    cachedLogin: Ember.computed("login", {
         get() {
-            return this.get('login') || Ember.$.cookie('login');
+            return this.get("login") || Ember.$.cookie("login");
         },
         set(key, value) {
-            Ember.$.cookie('login', value);
-            this.set('model.login', value);
+            Ember.$.cookie("login", value);
+            this.set("model.login", value);
             return value;
-        }
+        },
     }),
 
-    chartOptions: Ember.computed("model.hashrate", {
+    chartOptions: Ember.computed("model.hashrate", "model.poolCharts", "model.netCharts", {
         get() {
+            var now = new Date();
             var e = this,
-                t = e.getWithDefault("stats.model.poolCharts"),
+                t = e.getWithDefault("model.poolCharts", []),
+                netCharts = e.getWithDefault("model.netCharts", []),
                 a = {
                     chart: {
-                        backgroundColor: "rgba(255, 255, 255, 0.1)",
-                        type: "spline",
-                        height: 220,
-                        marginRight: 10,
+                        backgroundColor: "rgba(48, 97, 63, 0.0)  ",
+                        type: "areaspline",
+                        height: 270,
+                        ignoreHiddenSeries: !1,
                         events: {
                             load: function () {
-                                var series = this.series[0];
-                                setInterval(function () {
-                                    var x = (new Date()).getTime(), y = e.getWithDefault("model.Hashrate") / 1000000;
-                                    series.addPoint([x, y], true, true);
-                                }, 1090000000);
-                            }
-                        }
+                                var self = this;
+
+                                var chartInterval = setInterval(function () {
+                                    var series = self.series;
+                                    if (!series) {
+                                        clearInterval(chartInterval);
+                                        return;
+                                    }
+
+                                    t = e.getWithDefault("model.poolCharts", []);
+                                    netCharts = e.getWithDefault("model.netCharts", []);
+
+                                    // Hashrate chart
+                                    var hashData = [];
+                                    t.forEach(function (entry) {
+                                        var x = new Date(1000 * entry.x);
+                                        var l = x.toLocaleString();
+                                        var y = entry.y;
+                                        hashData.push({ x: x, y: y, d: l });
+                                    });
+
+                                    // Point for now 
+                                    var now = new Date();
+                                    var l = now.toLocaleString();
+                                    var y = e.getWithDefault("model.hashrate");
+                                    var lastHash = { x: now, y: y, d: l };
+                                    { hashData.push(lastHash); }
+
+                                    // Network Difficulty chart
+                                    var netDiffData = [];
+                                    netCharts.forEach(function (entry) {
+                                        var x = new Date(1000 * entry.x);
+                                        var l = x.toLocaleString();
+                                        var y = entry.y;
+                                        netDiffData.push({ x: x, y: y, d: l });
+                                    });
+
+                                    series[0].setData(hashData, true, {}, true);
+                                    series[1].setData(netDiffData, true, {}, true);
+
+                                }, 88 * 1000);
+                            },
+                        },
                     },
                     title: {
-                        text: "Pool Hashrate",
+                        text: '<b>Ethereum Classic - PPLNS </b>',
+                        align: 'center',
+                        x: 0,
+                        y: 15,
+                        useHTML: false,
                         style: {
-                            color: "#fff"
+                            color: "rgba(0,0,0,0.76)",
+                            fontSize: '15px',
+                            fontFamily: 'Arial',
+                            fontWeight: '400'
                         }
                     },
                     xAxis: {
-                        labels: {
-                            style: {
-                                color: "#fff"
-                            }
-                        },
                         ordinal: false,
-                        type: "datetime"
-                    },
-                    yAxis: {
-                        title: {
-                            text: "HASHRATE",
-                            style: {
-                                color: "#fff"
-                            }
-                        },
-                        min: 0,
+                        gridLineWidth: 1,
+                        type: "datetime",
                         labels: {
                             style: {
-                                color: "#fff"
-                            }
-                        }
+                                color: "#000",
+                            },
+                            formatter: function () {
+                                return formatDate(this.value, "hours:minutes");
+                            },
+                        },
                     },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: "#ccc"
-                    }],
+                    yAxis: [
+                        {
+                            index: 0,
+                            tickAmount: 4,
+                            title: {
+                                text: "Pool Hashrate",
+                                style: {
+                                    color: "#32e400",
+                                },
+                            },
+                            min: 0,
+                            labels: {
+                                enabled: true,
+                                style: {
+                                    color: "#000",
+                                },
+                                formatter: function () {
+                                    return formatNumber(this.value);
+                                },
+                            },
+                        },
+                        {
+                            index: 1,
+                            tickAmount: 4,
+                            title: {
+                                text: "NETWORK DIFFICULTY",
+                                style: {
+                                    color: "#007BFF",
+                                },
+                            },
+                            min: 0,
+                            labels: {
+                                enabled: true,
+                                style: {
+                                    color: "#000",
+                                },
+                                formatter: function () {
+                                    return formatNumber(this.value);
+                                },
+                            },
+                            opposite: true,
+                        },
+                    ],
+                    plotOptions: {
+                        areaspline: {
+                            marker: {
+                                enabled: false,
+                            },
+                        },
+                    },
+                    plotLines: [
+                        {
+                            value: 0,
+                            width: 1,
+                            color: "#000",
+                        },
+                    ],
                     legend: {
-                        enabled: true
+                        symbolRadius: 4,
+                        borderWidth: 1,
+                        itemStyle: {
+                            color: "rgba(0,0,0,0.76)",
+                        },
+                        itemHoverStyle: {
+                            color: "#000000",
+                        },
+                        itemHiddenStyle: {
+                            color: "#A8A2A2",
+                        },
                     },
                     tooltip: {
-                        formatter: function () {
-                            return this.y > 1000000000000 ? "<b>" + this.point.d + "<b><br>Hashrate&nbsp;" + (this.y / 1000000000000).toFixed(2) + "&nbsp;TH/s</b>" : this.y > 1000000000 ? "<b>" + this.point.d + "<b><br>Hashrate&nbsp;" + (this.y / 1000000000).toFixed(2) + "&nbsp;GH/s</b>" : this.y > 1000000 ? "<b>" + this.point.d + "<b><br>Hashrate&nbsp;" + (this.y / 1000000).toFixed(2) + "&nbsp;MH/s</b>" : "<b>" + this.point.d + "<b><br>Hashrate<b>&nbsp;" + this.y.toFixed(2) + "&nbsp;H/s</b>";
-                        },
-                        useHTML: true
+                        borderRadius: 7,
+                        borderWidth: 1,
+                        shared: false,
+                        headerFormat: "",
+                        shared: false,
+                        headerFormat: "",
                     },
                     exporting: {
-                        enabled: false
-                    },
-                    series: [{
-                        color: "#15BD27",
-                        name: "Hashrate",
-                        data: function () {
-                            var e, a = [];
-                            if (null != t) {
-                                for (e = 0; e <= t.length - 1; e += 1) {
-                                    var n = 0,
-                                        r = 0,
-                                        l = 0;
-                                    r = new Date(1e3 * t[e].x);
-                                    l = r.toLocaleString();
-                                    n = t[e].y; a.push({
-                                        x: r,
-                                        d: l,
-                                        y: n
-                                    });
-                                }
-                            } else {
-                                a.push({
-                                    x: 0,
-                                    d: 0,
-                                    y: 0
-                                });
-                            }
-                            return a;
-                        }()
-                    }]
-                };
-            return a;
-        }
-    }),
-
-    chartDiff: Ember.computed("model.hashrate", {
-        get() {
-            var e = this,
-                t = e.getWithDefault("stats.model.netCharts"),
-                a = {
-                    chart: {
-                        backgroundColor: "rgba(255, 255, 255, 0.1)",
-                        type: "spline",
-                        height: 250,
-                        marginRight: 10,
-                        //zoomType: 'xy',
-                        /* events: {
-                             load: function() {
-                                 var series = this.series[0];
-                                 setInterval(function() {
-                                     var x = (new Date()).getTime(), y = e.getWithDefault("difficulty") / 1000000;
-                                     series.addPoint([x, y], true, true);
-                                 }, 1090000000);
-                             }
-                         } */
-                    },
-                    title: {
-                        text: "Network Difficulty",
-                        style: {
-                            color: "#fff"
-                        }
-                    },
-                    rangeSelector: {
-                        enabled: true,
-                        selected: 4,
-                        allButtonsEnabled: true,
-                        inputDateFormat: '%Y/%m/%d %H:%M',
-                        inputEditDateFormat: '%Y/%m/%d %H:%M',
-                        inputEnabled: false,
-                        buttons: [{
-                            type: 'hour',
-                            count: 1,
-                            text: '1h'
-                        },
-                        {
-                            type: 'hour',
-                            count: 2,
-                            text: '2h'
-                        },
-                        {
-                            type: 'hour',
-                            count: 4,
-                            text: '4h'
-                        },
-                        {
-                            type: 'hour',
-                            count: 6,
-                            text: '6h'
-                        },
-                        {
-                            type: 'hour',
-                            count: 12,
-                            text: '12h'
-                        },
-                        {
-                            type: 'all',
-                            text: 'All'
-                        }
-                        ],
-                    },
-                    navigator: {
-                        enabled: true
-                    },
-                    /*             scrollbar: {
-                           enabled:true,
-                           barBackgroundColor: 'gray',
-                           barBorderRadius: 7,
-                           barBorderWidth: 0,
-                           buttonBackgroundColor: 'gray',
-                           buttonBorderWidth: 0,
-                           buttonArrowColor: 'yellow',
-                           buttonBorderRadius: 7,
-                           rifleColor: 'yellow',
-                           trackBackgroundColor: 'white',
-                           trackBorderWidth: 1,
-                           trackBorderColor: 'silver',
-                           trackBorderRadius: 7
-                          
-                                           
-                       },  */
-                    credits: {
                         enabled: false,
-                        position: {
-                            align: 'right',
-                            x: -10,
-                            verticalAlign: 'bottom',
-                            y: -5
-                        },
-                        href: "https://highcharts.com",
-                        text: "Highcharts"
                     },
-                    xAxis: {
-
-                        labels: {
-                            style: {
-                                color: "#fff"
-                            }
-                            //minRange: 1
-                        },
-                        ordinal: false,
-                        type: "datetime"
-                    },
-                    yAxis: {
-
-                        title: {
-                            text: "DIFFICULTY",
-                            style: {
-                                color: "#fff"
-                            }
-                        },
-
-                        labels: {
-                            style: {
-                                color: "#fff"
-                            }
-                        }
-                    },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: "#fff"
-                    }],
-                    legend: {
-                        enabled: false
-                    },
-                    tooltip: {
-                        formatter: function () {
-                            return this.y > 1000000000000 ? "<b>" + this.point.d + "<b><br>Difficulty&nbsp;" + (this.y / 1000000000000).toFixed(2) + "&nbsp;TH/s</b>" : this.y > 1000000000 ? "<b>" + this.point.d + "<b><br>Difficulty&nbsp;" + (this.y / 1000000000).toFixed(2) + "&nbsp;GH/s</b>" : this.y > 1000000 ? "<b>" + this.point.d + "<b><br>Difficulty&nbsp;" + (this.y / 1000000).toFixed(2) + "&nbsp;MH/s</b>" : "<b>" + this.point.d + "<b><br>Difficulty<b>&nbsp;" + this.y.toFixed(2) + "&nbsp;H/s</b>";
-                        },
-                        useHTML: true
-                    },
-                    exporting: {
-                        enabled: true
-                    },
-                    series: [{
-                        color: "#F87217",
-                        name: "Difficulty",
-                        data: function () {
-                            var e, a = [];
-                            if (null != t) {
-                                for (e = 0; e <= t.length - 1; e += 1) {
-                                    var n = 0,
-                                        r = 0,
-                                        l = 0;
-                                    r = new Date(1e3 * t[e].x);
-                                    l = r.toLocaleString();
-                                    n = t[e].y; a.push({
-                                        x: r,
-                                        d: l,
-                                        y: n
+                    series: [
+                        {
+                            yAxis: 0,
+                            name: "Pool Hashrate",
+                            fillColor: "rgba(49, 227, 0, 0.22)",
+                            color: "#32e400",
+                            tooltip: {
+                                pointFormatter: function () {
+                                    return (
+                                        formatDate(this.x, "day.month.year hours:minutes") +
+                                        "<br><b>Pool Hashrate: " +
+                                        formatHashrate(this.y, true) +
+                                        "</b>"
+                                    );
+                                },
+                            },
+                            states: {
+                                inactive: {
+                                    opacity: 0.1,
+                                },
+                            },
+                            data: function () {
+                                var hashData = [];
+                                if (null != t) {
+                                    t.forEach(function (entry) {
+                                        var x = new Date(1000 * entry.x);
+                                        var l = x.toLocaleString();
+                                        var y = entry.y;
+                                        hashData.push({ x: x, y: y, d: l });
                                     });
                                 }
-                            } else {
-                                a.push({
-                                    x: 0,
-                                    d: 0,
-                                    y: 0
-                                });
-                            }
-                            return a;
-                        }()
 
-                    }]
+                                var l = now.toLocaleString();
+                                var y = e.getWithDefault("model.hashrate");
+                                var lastHash = { x: now, y: y, d: l };
+                                { hashData.push(lastHash); }
+
+                                return hashData;
+                            }()
+                        },
+                        {
+                            yAxis: 1,
+                            name: "NETWORK DIFFICULTY",
+                            fillColor: "rgba(212, 175, 55, 0.35)",
+                            color: "#007BFF",
+                            tooltip: {
+                                pointFormatter: function () {
+                                    return (
+                                        formatDate(this.x, "day.month.year hours:minutes") +
+                                        "<br><b>NETWORK DIFFICULTY: " +
+                                        formatNumber(this.y) +
+                                        "</b>"
+                                    );
+                                },
+                            },
+                            states: {
+                                inactive: {
+                                    opacity: 0.1,
+                                },
+                            },
+                            data: function () {
+                                var netDiffData = [];
+                                if (null != netCharts) {
+                                    netCharts.forEach(function (entry) {
+                                        var x = new Date(1000 * entry.x);
+                                        var l = x.toLocaleString();
+                                        var y = entry.y;
+                                        netDiffData.push({ x: x, y: y, d: l });
+                                    });
+                                }
+
+                                return netDiffData;
+                            }()
+                        },
+                    ],
                 };
             return a;
-        }
+        },
     }),
+
     dag: Ember.computed("stats", "model", {
         get() {
             var percent = (this.get("epoch") * 8192) / 1024 / 1024 + 1;
@@ -296,9 +309,10 @@ export default Ember.Controller.extend({
             return percent;
         },
     }),
+
     epoch: Ember.computed("model.stats", {
         get() {
-            return parseInt(this.get("applicationController.height") / 60000); /* etchash 60000 ethash 30000 */
+            return parseInt(this.get("applicationController.height") / 30000);
         },
-    })
+    }),
 });
