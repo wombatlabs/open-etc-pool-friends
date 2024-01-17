@@ -120,7 +120,7 @@ export default Ember.Controller.extend({
                         y: 15,
                         useHTML: false,
                         style: {
-                            color: "rgba(0,0,0,0.76)",
+                            color: "rgba(255,255,255,0)",
                             fontSize: '15px',
                             fontFamily: 'Arial',
                             fontWeight: '400'
@@ -200,7 +200,7 @@ export default Ember.Controller.extend({
                         symbolRadius: 4,
                         borderWidth: 1,
                         itemStyle: {
-                            color: "rgba(0,0,0,0.76)",
+                            color: "rgba(255,255,255,0)",
                         },
                         itemHoverStyle: {
                             color: "#000000",
