@@ -51,7 +51,7 @@
     ]
   },
   "exchange": {
-    "enabled": true,
+    "enabled": false,
     "url": "https://api.coinpaprika.com/v1/ticker/etc-ethereum-classic",
     "timeout": "50s",
     "refreshInterval": "900s"
